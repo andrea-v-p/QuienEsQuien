@@ -33,43 +33,52 @@
 			*	$img6 = "data-sexo='f' data-pelo='rubio' data-gafas='no'";
 			*/
 
-			$img  = array( 1 => " data-sexo='m' data-pelo='rubio' data-gafas='si'", 2 => " data-sexo='m' data-pelo='castaño' data-gafas='no'", 3 => " data-sexo='m' data-pelo='moreno' data-gafas='si'",4 => " data-sexo='f' data-pelo='moreno' data-gafas='si'",5 => " data-sexo='f' data-pelo='castaño' data-gafas='no'",6 => " data-sexo='f' data-pelo='rubio' data-gafas='no'");
+			$img  = [1 => " data-sexo='m' data-pelo='rubio' data-gafas='si'", 
+					2 => " data-sexo='m' data-pelo='castaño' data-gafas='no'", 
+					3 => " data-sexo='m' data-pelo='moreno' data-gafas='si'",
+					4 => " data-sexo='f' data-pelo='moreno' data-gafas='si'",
+					5 => " data-sexo='f' data-pelo='castaño' data-gafas='no'",
+					6 => " data-sexo='f' data-pelo='rubio' data-gafas='no'"];
 
 				echo ('	
 					<div class="container">
-						<img src="Imagenes/'.$cartaSeleccionada.'.png" style="width:'.$wid.'px;height:'.$hei.'px;" class="frontFlip" id="selecionada"'.$img[$cartaSeleccionada].'>
-						<img src="Imagenes/dorso.png" style="width:'.$wid.'px;height:'.$hei.'px;" class="backFlip" id="'.$cartaSeleccionada.'b">
+						<img src="Imagenes/'.$cartaSeleccionada.'.png" style="width:'.$wid.'px;height:'.$hei.'px;" class="frontFlipPe" id="selecionada"'.$img[$cartaSeleccionada].'>
+						<img src="Imagenes/dorso.png" style="width:'.$wid.'px;height:'.$hei.'px;" class="backFlipPe" id="'.$cartaSeleccionada.'b">
 						</div>
 				');
 
 
 					echo ("<div id='tabla'> <table>");
-					
+					$contId = 1;
 					for ($i=0; $i < $col ; $i++) { 
 						echo ("<tr>");
 						for ($x=0; $x < $fil ; $x++) {
-							echo ('	<td><div class="container">
-										<img src="Imagenes/'.$listaCartas[$cont].'.png" style="width:'.$wid.'px;height:'.$hei.'px;" class="backFlip" id="'.$cont.'f"'.$img[$cont].'>
-										<img src="Imagenes/dorso.png" style="width:'.$wid.'px;height:'.$hei.'px;" class="frontFlip" id="'.$cont.'b">
+							echo ('<td><div class="container">
+										<img src="Imagenes/'.$listaCartas[$cont].'.png" style="width:'.$wid.'px;height:'.$hei.'px;" class="backFlip" id="'.$contId.'f"'.$img[$contId].'>
+										<img src="Imagenes/dorso.png" style="width:'.$wid.'px;height:'.$hei.'px;" class="frontFlip" id="'.$contId.'b">
 									</div></td>');
-							$cont++;
+							$cont++; 
+							$contId++;
 						}
 						echo ("</tr>");
 					}
 				echo ("</table>");		 
 			?>
 
-			<select id="atributos" name="atributos">
-				<option value="chico">¿Es un chico?</option>
-				<option value="chica">¿Es una chica?</option>
-				<option value="moreno">¿Es moreno?</option>
-				<option value="rubio">¿Es rubio?</option>
-				<option value="castaño">¿Es castaño?</option>
-				<option value="gafas">¿Lleva gafas?</option>
-			</select>
+				<div id="comprobaciones">
+				<textarea rows="15" cols="30" readonly></textarea>
+				<br>
+				<select id="atributos" name="atributos">
+					<option value="chico">¿Es un chico?</option>
+					<option value="chica">¿Es una chica?</option>
+					<option value="moreno">¿Es moreno?</option>
+					<option value="rubio">¿Es rubio?</option>
+					<option value="castanyo">¿Es castaño?</option>
+					<option value="gafas">¿Lleva gafas?</option>
+				</select>
 
-			<button type="button" onclick="comprobar()">Comprobar</button> 
-
+				<button type="button" onclick="distribuir()">Comprobar</button> 
+				</div>
 			</div>
 		</div>
 	</body>
