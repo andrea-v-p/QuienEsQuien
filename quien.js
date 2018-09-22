@@ -1,62 +1,103 @@
-//FALTA COMPROBAR ATRIBUTOS DE LA CARTA SELECCIONADA
-
-
-
 //contador de intentos que se ha hecho en la partida
 var intentos = 0;
+
+//FUNCION DISTRIBUIDORA
 function distribuir(){
 	var pregunta = comprobarPregunta();
+	var respuestaSelecionada;
 
 	if (pregunta === "f" || pregunta === "m") {
-		var selecionada = comprobarSexo("selecionada");
-		comprobarRestantes("sexo", selecionada);
+		respuestaSelecionada = comprobarSexo("selecionada");
+		escribirPreguntas(pregunta, respuestaSelecionada);
+		comprobarRestantes("sexo", respuestaSelecionada, pregunta);
 	}
 	else if (pregunta === "moreno" || pregunta === "castanyo" || pregunta === "rubio") {
-		var selecionada = comprobarPelo("selecionada");
-		comprobarRestantes("pelo", selecionada);
+		respuestaSelecionada = comprobarPelo("selecionada");
+		escribirPreguntas(pregunta, respuestaSelecionada);
+		comprobarRestantes("pelo", respuestaSelecionada, pregunta);
 	}
 	else if (pregunta === "si" || pregunta === "no") {
-		var selecionada = comprobarGafas("selecionada");
-		comprobarRestantes("gafas", selecionada);
+		respuestaSelecionada = comprobarGafas("selecionada");
+		escribirPreguntas(pregunta, respuestaSelecionada);
+		comprobarRestantes("gafas", respuestaSelecionada, pregunta);
 	}
 }
 
-function comprobarRestantes(tipo, selecionada){
+
+function comprobarRestantes(tipo, selecionada, pregunta){
 	var cartasActivas = document.getElementsByClassName("backFlip");
 	var sexo;
-	var i = 0;
 
-	//Da por saco al actualizar la array
-	
+	//Falla al quitar elementos de la array
 	var cartasId = [];
 
-	for (var x = 0; x < largo ; x++) {
+	var largo1 = cartasActivas.length;
+
+	for (var x = 0; x < largo1 ; x++) {
 		cartasId.push(cartasActivas[x].id);
 	}
 
-	var largo = cartasId.length;
+	var largo2 = cartasId.length;
 
-	for (i = 0; i <= largo ; i++) {
+	for (var i = 0; i < largo2 ; i++) {
 		if (tipo == "sexo") {
 			sexo = comprobarSexo(cartasId[i]);
 			if( sexo != selecionada){
-				flip(cartasActivas[i].id);
+				flip(cartasId[i]);
 			}
 		}
 		else if (tipo == "pelo"){
-			if(comprobarPelo(cartasId[i]) != selecionada){
-				flip(cartasActivas[i].id);
+			if (selecionada == pregunta) {
+				if(comprobarPelo(cartasId[i]) != selecionada){
+					flip(cartasId[i]);
+				}
+			}
+			else if (selecionada != pregunta){
+				if(comprobarPelo(cartasId[i]) == pregunta){
+					flip(cartasId[i]);
+				}
 			}
 		}
 		else if (tipo == "gafas"){
 			if(comprobarGafas(cartasId[i]) != selecionada){
-				flip(cartasActivas[i].id);
+				if( gafas != selecionada){
+					flip(cartasId[i]);
+				}
 			}
 		}
 	}
 }
 
-// Funcion distribuidora
+//Escribe en el textarea las preguntas que se han formulado con su respuesta
+function escribirPreguntas(pregunta, selecionada){
+	var preguntaCompleta;
+	var respuesta;
+
+	if (pregunta == selecionada){
+		respuesta = "Si";
+	}else {
+		respuesta = "no";
+	}
+
+	if (pregunta == "m") {
+		preguntaCompleta = "¿Es un chico?";
+	}else if(pregunta == "f"){
+		preguntaCompleta = "¿Es una chica?";
+	}else if(pregunta == "moreno"){
+		preguntaCompleta = "¿Es moreno?";
+	}else if (pregunta == "rubio"){
+		preguntaCompleta = "¿Es rubio?";
+	}else if (pregunta == "castanyo"){
+		preguntaCompleta = "¿Es castaño?";
+	}else if (pregunta == "gafas"){
+		preguntaCompleta = "¿Lleva gafas?";
+	}
+
+	document.getElementById("texto").value += preguntaCompleta+ '\n';
+	document.getElementById("texto").value += respuesta+ '\n';
+}
+
+//Comprueba la pregunta que se ha formulado
 function comprobarPregunta(){
 	var pregunta = document.getElementById("atributos").value;
 
@@ -90,23 +131,25 @@ function comprobarPregunta(){
 	}
 }
 
-
+//comprueba el valor del atributo pelo
 function comprobarPelo(carta){
-	var pelo = document.getElementById(carta).dataset.pelo;
+	var peloDef = document.getElementById(carta).dataset.pelo;
 	
-	return pelo;
+	return peloDef;
 }
 
+//comprueba el valor del atributo sexo
 function comprobarSexo(carta){
-	var sexo = document.getElementById(carta).dataset.sexo;
+	var sexoDef = document.getElementById(carta).dataset.sexo;
 	
-	return sexo;
+	return sexoDef;
 }
 
+//comprueba el valor del atributo gafas
 function comprobarGafas(carta){
-	var gafas = document.getElementById(carta).dataset.gafas;
+	var gafasDef = document.getElementById(carta).dataset.gafas;
 
-	return gafas;
+	return gafasDef;
 }
 
 

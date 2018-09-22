@@ -66,7 +66,7 @@
 			?>
 
 				<div id="comprobaciones">
-				<textarea rows="15" cols="30" readonly></textarea>
+				<textarea rows="15" cols="30" readonly id="texto"></textarea>
 				<br>
 				<select id="atributos" name="atributos">
 					<option value="chico">¿Es un chico?</option>

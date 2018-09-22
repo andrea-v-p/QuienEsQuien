@@ -1,5 +1,5 @@
 body {
-  background-image: url('Imagenes/fondo.gif');
+  /*background-image: url('Imagenes/fondo.gif');*/
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
@@ -59,7 +59,7 @@ body {
   transition: webkit-transform .5s linear 0s;
   transition: transform .5s linear 0s;
 }
-.container > .frontFlip{
+.container > .frontFlip, .frontFlipP{
   position: absolute; -webkit-transform: perspective(600px) rotateY(-180deg);
   transform: perspective(600px) rotateY(-180deg);
   /*background #fCO; width: 200px;height: 200px; border-radius: 7px;*/
@@ -68,7 +68,7 @@ body {
   transition: webkit-transform .5s linear 0s;
   transition: transform .5s linear 0s;
 }
-.container > .backFlip{
+.container > .backFlip, .backFlipP{
   position: absolute; -webkit-transform: perspective(600px) rotateY(-180deg);
   transform: perspective(600px) rotateY(0deg);
   /*background #fCO; width: 200px;height: 200px; border-radius: 7px;*/
