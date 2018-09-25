@@ -6,7 +6,7 @@
 		<link rel="stylesheet" href="style.css">
 		<script src="quien.js"></script>
 	</head>
-	<body>
+	<body onload="alCargar()">
 		<div id="containerPrincipal">
 			<div class="intent" id="intent">Intentos: 0</div>
 			<!-- Atributos personalizados: data-sexo, data-pelo, data-gafas -->
@@ -20,8 +20,8 @@
 			$cont =0;
 
 			$listaCartas = array(1, 2, 3, 4, 5, 6);
-			$wid = 200;
-			$hei = 240;
+			$wid = 90;
+			$hei = 130;
 			
 
 			/*
@@ -34,17 +34,17 @@
 			*/
 
 			$img  = [1 => " data-sexo='m' data-pelo='rubio' data-gafas='si'", 
-					2 => " data-sexo='m' data-pelo='castaño' data-gafas='no'", 
+					2 => " data-sexo='m' data-pelo='castanyo' data-gafas='no'", 
 					3 => " data-sexo='m' data-pelo='moreno' data-gafas='si'",
 					4 => " data-sexo='f' data-pelo='moreno' data-gafas='si'",
-					5 => " data-sexo='f' data-pelo='castaño' data-gafas='no'",
+					5 => " data-sexo='f' data-pelo='castanyo' data-gafas='no'",
 					6 => " data-sexo='f' data-pelo='rubio' data-gafas='no'"];
 
 				echo ('	
-					<div class="container">
-						<img src="Imagenes/'.$cartaSeleccionada.'.png" style="width:'.$wid.'px;height:'.$hei.'px;" class="frontFlipPe" id="selecionada"'.$img[$cartaSeleccionada].'>
-						<img src="Imagenes/dorso.png" style="width:'.$wid.'px;height:'.$hei.'px;" class="backFlipPe" id="'.$cartaSeleccionada.'b">
-						</div>
+					<div id="elegida">
+						<img src="Imagenes/'.$cartaSeleccionada.'.png" style="width:'.$wid.'px;height:'.$hei.'px;" class="frontFlipP" id="selecionada"'.$img[$cartaSeleccionada].'>
+						<img src="Imagenes/dorso.png" style="width:'.$wid.'px;height:'.$hei.'px;" class="backFlipP" id="selecionadaB">
+					</div>
 				');
 
 
@@ -62,11 +62,11 @@
 						}
 						echo ("</tr>");
 					}
-				echo ("</table>");		 
+				echo ("</table></div>");		 
 			?>
 
 				<div id="comprobaciones">
-				<textarea rows="15" cols="30" readonly id="texto"></textarea>
+				<textarea rows="10" cols="30" readonly id="texto"></textarea>
 				<br>
 				<select id="atributos" name="atributos">
 					<option value="chico">¿Es un chico?</option>

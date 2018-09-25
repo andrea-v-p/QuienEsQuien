@@ -26,7 +26,7 @@ function distribuir(){
 
 function comprobarRestantes(tipo, selecionada, pregunta){
 	var cartasActivas = document.getElementsByClassName("backFlip");
-	var sexo;
+	var sexo, gafas;
 
 	//Falla al quitar elementos de la array
 	var cartasId = [];
@@ -59,12 +59,42 @@ function comprobarRestantes(tipo, selecionada, pregunta){
 			}
 		}
 		else if (tipo == "gafas"){
-			if(comprobarGafas(cartasId[i]) != selecionada){
-				if( gafas != selecionada){
-					flip(cartasId[i]);
-				}
+			gafas = comprobarGafas(cartasId[i]);
+			if( gafas != selecionada){
+				flip(cartasId[i]);
 			}
+			
 		}
+	}
+	comprobarFinal();
+}
+
+//comprueba si se ha acabado el juego si ha acabado escribe final en el textArea
+function comprobarFinal(){
+	var cartasActivas = document.getElementsByClassName("backFlip");
+
+	if (cartasActivas.length === 1) {
+		document.getElementById("texto").value += "¡FINAL!\n";
+		flipSelecionada();
+		resultado(cartasActivas[0].id);
+	}
+}
+
+//Voltea la ultima carta
+function flipSelecionada(){
+	document.getElementById("selecionada").className = "backFlipP";
+	document.getElementById("selecionadaB").className = "frontFlipP";
+}
+
+//comprueba el resultado de la partida
+function resultado(cartaId){
+	var srcSelecionada = document.getElementById("selecionada").src;
+	var srcUltima = document.getElementById(cartaId).src;
+
+	if (srcSelecionada == srcUltima) {
+		document.getElementById("texto").value += "¡Has ganado!";
+	}else{
+		document.getElementById("texto").value += "¡Has perdido!";
 	}
 }
 
@@ -89,12 +119,12 @@ function escribirPreguntas(pregunta, selecionada){
 		preguntaCompleta = "¿Es rubio?";
 	}else if (pregunta == "castanyo"){
 		preguntaCompleta = "¿Es castaño?";
-	}else if (pregunta == "gafas"){
+	}else if (pregunta == "si" || pregunta == "no"){
 		preguntaCompleta = "¿Lleva gafas?";
 	}
 
-	document.getElementById("texto").value += preguntaCompleta+ '\n';
-	document.getElementById("texto").value += respuesta+ '\n';
+	document.getElementById("texto").value += preguntaCompleta;
+	document.getElementById("texto").value += ' ' + respuesta+ '\n';
 }
 
 //Comprueba la pregunta que se ha formulado
@@ -152,11 +182,27 @@ function comprobarGafas(carta){
 	return gafasDef;
 }
 
-
 // Cambia la clase de la carta que se han descartado evitando que se puedan volver a girar
 function flip(idCard){
 	var num = idCard.substring(0, 1);
 
 	document.getElementById(num+"b").className = "frontFlip2";
 	document.getElementById(num+"f").className = "backFlip2";
+}
+
+//Recopilacion de todas las funciones que se ejecutan al cargar
+function alCargar(){
+	limpiarTextArea();
+	limpiarIntentos();
+}
+
+//ONLOAD --> Vacia el TextArea al principio de cada partida
+function limpiarTextArea(){
+	document.getElementById("texto").value = '';
+}
+
+//ONLOAD --> Pone a cero el numero de intentos al principio de cada partida
+function limpiarIntentos(){
+	intentos = 0;
+	document.getElementById("intent").value = 'Intentos: 0';
 }
