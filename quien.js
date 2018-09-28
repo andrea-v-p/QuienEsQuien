@@ -1,10 +1,27 @@
 //contador de intentos que se ha hecho en la partida
 var intentos = 0;
+var dific;
+var tiempo = 20;
+var myVar;
 
 //FUNCION DISTRIBUIDORA
 function distribuir(){
+	if (dific == "easy"){
+		distribuirEasy();
+
+	}else if (dific == "normal") {
+		distribuirNormal();
+
+	}else if (dific == "hard") {
+		distribuirHard();
+
+	}
+}
+
+function distribuirEasy(){
 	var pregunta = comprobarPregunta();
 	var respuestaSelecionada;
+	augIntentos();
 
 	if (pregunta === "f" || pregunta === "m") {
 		respuestaSelecionada = comprobarSexo("selecionada");
@@ -20,9 +37,94 @@ function distribuir(){
 		respuestaSelecionada = comprobarGafas("selecionada");
 		escribirPreguntas(pregunta, respuestaSelecionada);
 		comprobarRestantes("gafas", respuestaSelecionada, pregunta);
+	}	
+}
+
+function distribuirNormal(){
+	var pregunta = comprobarPregunta();
+	var respuestaSelecionada;
+	augIntentos();
+
+	if (pregunta === "f" || pregunta === "m") {
+		respuestaSelecionada = comprobarSexo("selecionada");
+		escribirPreguntas(pregunta, respuestaSelecionada);
+	}
+	else if (pregunta === "moreno" || pregunta === "castanyo" || pregunta === "rubio") {
+		respuestaSelecionada = comprobarPelo("selecionada");
+		escribirPreguntas(pregunta, respuestaSelecionada);
+	}
+	else if (pregunta === "si" || pregunta === "no") {
+		respuestaSelecionada = comprobarGafas("selecionada");
+		escribirPreguntas(pregunta, respuestaSelecionada);
 	}
 }
 
+function distribuirHard(){
+	tiempo = 20;
+	document.getElementById("contador").innerHTML = tiempo;
+
+	desbloqueado();
+	myVar = setInterval(temporizador, 1000);
+	var pregunta = comprobarPregunta();
+	var respuestaSelecionada;
+	augIntentos();
+
+	if (pregunta === "f" || pregunta === "m") {
+		respuestaSelecionada = comprobarSexo("selecionada");
+		escribirPreguntas(pregunta, respuestaSelecionada);
+	}
+	else if (pregunta === "moreno" || pregunta === "castanyo" || pregunta === "rubio") {
+		respuestaSelecionada = comprobarPelo("selecionada");
+		escribirPreguntas(pregunta, respuestaSelecionada);
+	}
+	else if (pregunta === "si" || pregunta === "no") {
+		respuestaSelecionada = comprobarGafas("selecionada");
+		escribirPreguntas(pregunta, respuestaSelecionada);
+	}
+}
+function bloqueado(idCard){
+	var cartasActivas = document.getElementsByClassName("backFlip").id;
+
+	for (var i = 0; i <= cartasActivas.length; i++) {
+		var num = cartasActivas[i].substring(0, 1);
+
+		document.getElementById(num+"b").className = "backFlipBlocked";
+		document.getElementById(num+"f").className = "frontFlipBlocked";
+	}
+}
+
+function desbloqueado(){
+	var cartasActivas = document.getElementsByClassName("backFlip").id;
+
+	for (var i = 0; i <= cartasActivas.length; i++) {
+		var num = cartasActivas[i].substring(0, 1);
+
+		document.getElementById(num+"b").className = "backFlip";
+		document.getElementById(num+"f").className = "frontFlip";
+	}
+}
+
+function clickNormal(idCarta){
+	flip(idCarta);
+	comprobarFinal();
+}
+
+function clickHard(idCarta){
+	flip(idCarta);
+	comprobarFinal();
+}
+
+function temporizador() {
+
+	if (tiempo <= 0) {
+		clearInterval(myVar);
+
+	}else{
+		tiempo = tiempo - 1;
+		document.getElementById("contador").innerHTML = tiempo;	
+	}
+
+}
 
 function comprobarRestantes(tipo, selecionada, pregunta){
 	var cartasActivas = document.getElementsByClassName("backFlip");
@@ -190,8 +292,15 @@ function flip(idCard){
 	document.getElementById(num+"f").className = "backFlip2";
 }
 
+//Aumenta el numero de intentos en 1
+function augIntentos(){
+	intentos = intentos + 1;
+	document.getElementById("intent").innerHTML = 'Intentos: '+intentos;
+}
+
 //Recopilacion de todas las funciones que se ejecutan al cargar
 function alCargar(){
+	dific = document.getElementById("dificultad").innerHTML;
 	limpiarTextArea();
 	limpiarIntentos();
 }
@@ -204,5 +313,5 @@ function limpiarTextArea(){
 //ONLOAD --> Pone a cero el numero de intentos al principio de cada partida
 function limpiarIntentos(){
 	intentos = 0;
-	document.getElementById("intent").value = 'Intentos: 0';
+	document.getElementById("intent").innerHTML = 'Intentos: 0';
 }

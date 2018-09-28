@@ -72,7 +72,7 @@ body {
 /*FIN DE FLIP DE LAS CARTAS*/
 
 /* CARTAS CORRECTAS */
-.container > .frontFlip2{
+.container > .frontFlip2, .container > .frontFlipBlocked{
   position: absolute; -webkit-transform: perspective(600px) rotateY(180deg);
   transform: perspective(600px) rotateY(0deg);
   background #fCO; width: 200px;height: 200px; border-radius: 7px;
@@ -82,7 +82,7 @@ body {
   transition: transform .5s linear 0s;
   border: red;
 }
-.container > .backFlip2{
+.container > .backFlip2, .container > .backFlipBlocked{
   position: absolute; -webkit-transform: perspective(600px) rotateY(180deg);
   transform: perspective(600px) rotateY(180deg);
   background #fCO; width: 200px;height: 200px; border-radius: 7px;
@@ -138,9 +138,38 @@ body {
   resize: none;
   overflow-y: scroll;
 }
+.info{
+  display: inline;
+}
+
+#dificultad{
+  font-family:courier, monospace;
+  text-align: center;
+  width: 130px;
+  padding: 10px;
+  border-radius:12px;
+  background-color: #01061e;
+  color: #fff;
+  font-weight: bold;
+}
 
 #intent{
+  text-align: center;
   font-family:courier, monospace;
+  float: left;
+  width: 130px;
+  padding: 10px;
+  border-radius:12px;
+  background-color: #01061e;
+  color: #fff;
+  font-weight: bold;
+}
+
+#contador{
+  text-align: center;
+  font-size:22px;
+  font-family:courier, monospace;
+  float: right;
   width: 130px;
   padding: 10px;
   border-radius:12px;
