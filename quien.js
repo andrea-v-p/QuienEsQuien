@@ -3,6 +3,7 @@ var intentos = 0;
 var dific;
 var tiempo = 10;
 var myVar;
+var compro = false;
 
 //FUNCION DISTRIBUIDORA
 function distribuir(){
@@ -69,6 +70,7 @@ function distribuirHard(){
 	var pregunta = comprobarPregunta();
 	var respuestaSelecionada;
 	augIntentos();
+	compro == false;
 
 	if (pregunta === "f" || pregunta === "m") {
 		respuestaSelecionada = comprobarSexo("selecionada");
@@ -86,37 +88,26 @@ function distribuirHard(){
 function bloquear(){
 	var cartasActivas = document.getElementsByClassName("backFlip");
 	var idCarta;
+	var num;
 
-	if (cartasActivas.length > 0) {
-		for (var i = 0; i <= cartasActivas.length; i++) {
+	for (var i = 0; i <= cartasActivas.length; i++) {
+		if (cartasActivas.length > 0) {
 			idCarta = cartasActivas[i].id;
-			if (idCarta.length === 2) {
-				var num = idCarta.substring(0, 1);
-			}else if (idCarta.length === 3){
-				var num = idCarta.substring(0, 2);
-			}
-
-			document.getElementById(num+"f").className =+ " blocked";
-			// document.getElementById(num+"f").disabled = true;
+		
+			document.getElementById(idCarta).className = "backFlip blocked";
 		}
 	}
+
 }
 
 function desbloquear(){
-	var cartasDesactivadas = document.getElementsByClassName("blocked");
+	var cartasDesactivadas = document.getElementsByClassName("backFlip blocked");
 	var idCarta;
-
-	if (cartasDesactivadas.length > 0) {
-		for (var i = 0; i <= cartasDesactivadas.length; i++) {
-			idCarta = cartasDesactivadas[i].id;
-			if (idCarta.length === 2) {
-				var num = idCarta.substring(0, 1);
-			}else if (idCarta.length === 3){
-				var num = idCarta.substring(0, 2);
-			}
-
-			document.getElementById(num+"f").classList.remove("blocked");;
-			// document.getElementById(num+"f").disabled = false;
+	for (var y = 0; y <= cartasDesactivadas.length; y++) {
+		if (cartasDesactivadas.length > 0) {
+			idCarta = cartasDesactivadas[y].id;
+		
+			document.getElementById(idCarta).classList.remove("blocked");
 		}
 	}
 }
@@ -133,10 +124,10 @@ function clickHard(idCarta){
 
 function temporizador() {
 
-	if (tiempo <= 0) {
-		bloquear();
+	if (tiempo <= 0 && compro == false) {
+		compro = true;
 		clearInterval(myVar);
-
+		bloquear();
 	}else{
 		tiempo = tiempo - 1;
 		document.getElementById("contador").innerHTML = tiempo;	
@@ -215,6 +206,10 @@ function resultado(cartaId){
 		document.getElementById("texto").value += "¡Has ganado!";
 	}else{
 		document.getElementById("texto").value += "¡Has perdido!";
+	}
+
+	if (dific == "hard") {
+		clearInterval(myVar);
 	}
 }
 
