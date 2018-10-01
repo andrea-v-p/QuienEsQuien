@@ -1,7 +1,7 @@
 //contador de intentos que se ha hecho en la partida
 var intentos = 0;
 var dific;
-var tiempo = 20;
+var tiempo = 10;
 var myVar;
 
 //FUNCION DISTRIBUIDORA
@@ -60,10 +60,11 @@ function distribuirNormal(){
 }
 
 function distribuirHard(){
-	tiempo = 20;
+	clearInterval(myVar);
+	tiempo = 10;
 	document.getElementById("contador").innerHTML = tiempo;
 
-	desbloqueado();
+	desbloquear();
 	myVar = setInterval(temporizador, 1000);
 	var pregunta = comprobarPregunta();
 	var respuestaSelecionada;
@@ -82,25 +83,41 @@ function distribuirHard(){
 		escribirPreguntas(pregunta, respuestaSelecionada);
 	}
 }
-function bloqueado(idCard){
-	var cartasActivas = document.getElementsByClassName("backFlip").id;
+function bloquear(){
+	var cartasActivas = document.getElementsByClassName("backFlip");
+	var idCarta;
 
-	for (var i = 0; i <= cartasActivas.length; i++) {
-		var num = cartasActivas[i].substring(0, 1);
+	if (cartasActivas.length > 0) {
+		for (var i = 0; i <= cartasActivas.length; i++) {
+			idCarta = cartasActivas[i].id;
+			if (idCarta.length === 2) {
+				var num = idCarta.substring(0, 1);
+			}else if (idCarta.length === 3){
+				var num = idCarta.substring(0, 2);
+			}
 
-		document.getElementById(num+"b").className = "backFlipBlocked";
-		document.getElementById(num+"f").className = "frontFlipBlocked";
+			document.getElementById(num+"f").className =+ " blocked";
+			// document.getElementById(num+"f").disabled = true;
+		}
 	}
 }
 
-function desbloqueado(){
-	var cartasActivas = document.getElementsByClassName("backFlip").id;
+function desbloquear(){
+	var cartasDesactivadas = document.getElementsByClassName("blocked");
+	var idCarta;
 
-	for (var i = 0; i <= cartasActivas.length; i++) {
-		var num = cartasActivas[i].substring(0, 1);
+	if (cartasDesactivadas.length > 0) {
+		for (var i = 0; i <= cartasDesactivadas.length; i++) {
+			idCarta = cartasDesactivadas[i].id;
+			if (idCarta.length === 2) {
+				var num = idCarta.substring(0, 1);
+			}else if (idCarta.length === 3){
+				var num = idCarta.substring(0, 2);
+			}
 
-		document.getElementById(num+"b").className = "backFlip";
-		document.getElementById(num+"f").className = "frontFlip";
+			document.getElementById(num+"f").classList.remove("blocked");;
+			// document.getElementById(num+"f").disabled = false;
+		}
 	}
 }
 
@@ -117,6 +134,7 @@ function clickHard(idCarta){
 function temporizador() {
 
 	if (tiempo <= 0) {
+		bloquear();
 		clearInterval(myVar);
 
 	}else{
@@ -286,10 +304,19 @@ function comprobarGafas(carta){
 
 // Cambia la clase de la carta que se han descartado evitando que se puedan volver a girar
 function flip(idCard){
-	var num = idCard.substring(0, 1);
+	var y = 0;
 
-	document.getElementById(num+"b").className = "frontFlip2";
-	document.getElementById(num+"f").className = "backFlip2";
+	if (idCard.length === 2) {
+		var num = idCard.substring(0, 1);
+	}else if (idCard.length === 3){
+		var num = idCard.substring(0, 2);
+	}
+	if (document.getElementById(num+"f").className == "backFlip blocked") {
+		y++;
+	}else{
+		document.getElementById(num+"b").className = "frontFlip2";
+		document.getElementById(num+"f").className = "backFlip2";
+	}
 }
 
 //Aumenta el numero de intentos en 1
