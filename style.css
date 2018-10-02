@@ -165,6 +165,13 @@ body {
   font-weight: bold;
 }
 
+#home{
+  float: right;
+  margin: 10px;
+  height: 60px; 
+  width: 60px;
+}
+
 #contador{
   text-align: center;
   font-size:22px;

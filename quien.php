@@ -6,7 +6,8 @@
 		<link rel="stylesheet" href="style.css">
 		<script src="quien.js"></script>
 	</head>
-	<body onload="alCargar()">			
+	<body onload="alCargar()">	
+
 		<?php
 			$cartaSeleccionada = rand(1, 12);
 			$col = 2;
@@ -49,6 +50,7 @@
 				// Atributos personalizados: data-sexo, data-pelo, data-gafas
 				echo ('	<div id="containerPrincipal">
 				<div class="intent"><p id="intent">Intentos: 0</p></div>
+				<a href="inicio.html"><img id="home" src="home.png"></a>
 				<p id="dificultad">easy</p>
 
 				<div id="cartas">');
@@ -80,6 +82,7 @@
 			}elseif (isset($_POST['normal'])) {
 				echo ('<div id="containerPrincipal">
 				<div class="intent"><p id="intent">Intentos: 0</p></div>
+				<a href="inicio.html"><img id="home" src="home.png"></a>
 				<p id="dificultad">normal</p>
 
 				<div id="cartas">');
@@ -109,7 +112,8 @@
 						</div>");
 
              } elseif (isset($_POST['hard'])) {                
-             	echo (' <div id="containerPrincipal"> <div class="info"><p id="intent">Intentos: 0</p> 
+             	echo (' <div id="containerPrincipal"> <div class="info"><p id="intent">Intentos: 0</p>
+             		<a href="inicio.html"><img id="home" src="home.png"></a>
              		<p id="contador">20</p></div>
              		<p id="dificultad">hard</p>
 
@@ -128,7 +132,7 @@
 							echo ("<tr>");
 							for ($x=0; $x < $fil ; $x++) {
 								echo ('<td><div class="container" onclick="clickHard(\''.$contId.'f\')">
-											<img src="Imagenes/'.$listaCartas[$cont].'.png"  style="width:'.$wid.'px;height:'.$hei.'px;" class="backFlip" id="'.$contId.'f"'.$img[$contId].'>
+											<img src="Imagenes/'.$listaCartas[$cont].'.png"  style="width:'.$wid.'px;height:'.$hei.'px;" class="backFlip blocked" id="'.$contId.'f"'.$img[$contId].'>
 											<img src="Imagenes/dorso.png" style="width:'.$wid.'px;height:'.$hei.'px;" class="frontFlip" id="'.$contId.'b">
 										</div></td>');
 								$cont++; 

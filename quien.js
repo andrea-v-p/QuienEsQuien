@@ -5,7 +5,7 @@ var tiempo = 10;
 var myVar;
 var compro = false;
 
-//FUNCION DISTRIBUIDORA
+//FUNCION DISTRIBUIDORA ENTRE NIVELES DE DIFICULTAD
 function distribuir(){
 	if (dific == "easy"){
 		distribuirEasy();
@@ -19,6 +19,7 @@ function distribuir(){
 	}
 }
 
+//Distribuye la logica del nivel facil
 function distribuirEasy(){
 	var pregunta = comprobarPregunta();
 	var respuestaSelecionada;
@@ -41,6 +42,7 @@ function distribuirEasy(){
 	}	
 }
 
+//Distribuye la logica del nivel normal
 function distribuirNormal(){
 	var pregunta = comprobarPregunta();
 	var respuestaSelecionada;
@@ -60,6 +62,7 @@ function distribuirNormal(){
 	}
 }
 
+//Distribuye la logica del nivel Dificil
 function distribuirHard(){
 	clearInterval(myVar);
 	tiempo = 10;
@@ -85,43 +88,49 @@ function distribuirHard(){
 		escribirPreguntas(pregunta, respuestaSelecionada);
 	}
 }
+
+//Bloquea las cartas en el nivel de dificultad dificil mientras el tiempo esta a 0
 function bloquear(){
 	var cartasActivas = document.getElementsByClassName("backFlip");
-	var idCarta;
-	var num;
+	var idCarta = [];
 
-	for (var i = 0; i <= cartasActivas.length; i++) {
-		if (cartasActivas.length > 0) {
-			idCarta = cartasActivas[i].id;
-		
-			document.getElementById(idCarta).className = "backFlip blocked";
+		for (var x = 0; x < cartasActivas.length; x++) {
+			idCarta.push(cartasActivas[x].id);
 		}
-	}
 
+		for (var y = 0; y < idCarta.length; y++) {
+			document.getElementById(idCarta[y]).className = "backFlip blocked";
+		}
+		
 }
 
+//Desbloquea las cartas en el nivel de dificultad dificil mientras el tiempo corra
 function desbloquear(){
 	var cartasDesactivadas = document.getElementsByClassName("backFlip blocked");
-	var idCarta;
-	for (var y = 0; y <= cartasDesactivadas.length; y++) {
-		if (cartasDesactivadas.length > 0) {
-			idCarta = cartasDesactivadas[y].id;
-		
-			document.getElementById(idCarta).classList.remove("blocked");
+	var idCarta = [];
+
+	for (var x = 0; x < cartasDesactivadas.length; x++) {
+			idCarta.push(cartasDesactivadas[x].id);
 		}
-	}
+
+	for (var y = 0; y < idCarta.length; y++) {
+			document.getElementById(idCarta[y]).classList.remove("blocked");
+		}
 }
 
+// ONCLICK --> onclick sobre las cartas en el nivel normal
 function clickNormal(idCarta){
 	flip(idCarta);
 	comprobarFinal();
 }
 
+// ONCLICK --> onclick sobre las cartas en el nivel dificil
 function clickHard(idCarta){
 	flip(idCarta);
 	comprobarFinal();
 }
 
+// Controla el tiempo que ha para girar cartas en el nivel dificil
 function temporizador() {
 
 	if (tiempo <= 0 && compro == false) {
@@ -135,6 +144,7 @@ function temporizador() {
 
 }
 
+//Comprueba las cartas restantes en el nivel facil y las gira al comprobar que no es la carta buscada
 function comprobarRestantes(tipo, selecionada, pregunta){
 	var cartasActivas = document.getElementsByClassName("backFlip");
 	var sexo, gafas;
